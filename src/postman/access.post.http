@@ -1,9 +1,10 @@
+@url=http://localhost:3000/v1/api
 
-POST http://localhost:3052/v1/api/shop/signup
+POST {{url}}/shop/signup
 Content-Type: application/json
 
 {
-    "name": "thien",
-    "email": "aron123@gmai.com",
+    "name": "shop2",
+    "email": "shop2@gmai.com",
     "password": "123!@#"
 }

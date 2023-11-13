@@ -8,9 +8,14 @@ class AccessControler {
     try {
       console.log(`[P]::signUp::`, req.body)
 
-      return res.status(201).json(await AccessService.signUp(req.body))
+      return res
+        .status(201)
+        .json(await AccessService.signUp(req.body))
+
     } catch (error) {
+
       next(error)
+
     }
   }
 

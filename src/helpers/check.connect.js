@@ -27,8 +27,6 @@ const checkOverload = () => {
     if (countConnect > maxConnection) {
       console.log(`Connection overload detected`)
     }
-
-    
     
   }, _SECONDS) // monitor every 5 seconds
 }
