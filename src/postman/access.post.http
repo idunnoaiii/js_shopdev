@@ -1,0 +1,9 @@
+
+POST http://localhost:3052/v1/api/shop/signup
+Content-Type: application/json
+
+{
+    "name": "thien",
+    "email": "aron123@gmai.com",
+    "password": "123!@#"
+}
