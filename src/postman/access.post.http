@@ -20,3 +20,11 @@ x-api-key: 7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b
     "email": "shop7@gmai.com",
     "password": "123!@#"
 }
+
+
+###
+POST {{url}}/shop/logout
+Content-Type: application/json
+x-api-key: 7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3 
+x-client-id: 65547cbdb9becc31498cf0f1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwMDYwMjMwLCJleHAiOjE3MDAyMzMwMzB9.bAMWulAwGqi2y-puHLnVJfAA5tN67SIH0mGgO9R_dOc

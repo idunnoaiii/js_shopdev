@@ -1,15 +1,12 @@
 'use strict'
 
 const { findById } = require("../services/apikey.service")
+const {API_HEADER} = require("../core/app.const")
 
-const HEADER = {
-    API_KEY: "x-api-key",
-    AUTHORISATION: "authorisation"
-}
 
 const apiKey = async (req, res, next) => {
     try {
-        const key = req.headers[HEADER.API_KEY]?.toString()
+        const key = req.headers[API_HEADER.API_KEY]?.toString()
         if (!key) {
             return res.status(403).json({
                 message: "Forbidden Error: apiKey is required"
@@ -31,7 +28,7 @@ const apiKey = async (req, res, next) => {
         return next()
 
     } catch (error) {
-
+        throw error
     }
 }
 
@@ -60,14 +57,8 @@ const permission = (permission) => {
 }
 
 
-const handleAsync = fn => {
-    return (req, res, next) => {
-        fn(req, res, next).catch(next)
-    }
-}
 
 module.exports = {
     apiKey,
     permission,
-    handleAsync
 }
