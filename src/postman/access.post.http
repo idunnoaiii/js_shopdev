@@ -5,7 +5,18 @@ Content-Type: application/json
 x-api-key: 7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3 
 
 {
-    "name": "shop5",
-    "email": "shop5@gmai.com",
+    "name": "shop7",
+    "email": "shop7@gmai.com",
+    "password": "123!@#"
+}
+
+
+###
+POST {{url}}/shop/login
+Content-Type: application/json
+x-api-key: 7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3 
+
+{
+    "email": "shop7@gmai.com",
     "password": "123!@#"
 }

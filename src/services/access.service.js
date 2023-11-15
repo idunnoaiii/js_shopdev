@@ -4,8 +4,12 @@ const crypto = require("node:crypto")
 const keyTokenService = require("./keyToken.service")
 const { createTokenPair } = require("../auth/authUtils")
 const { getInfoData } = require("../utils")
-const { ConflictRequestError } = require("../core/error.response")
+const { ConflictRequestError, BadRequestError, UnauthorisedError } = require("../core/error.response")
 
+//services
+
+const { findByEmail } = require("./shop.service")
+const { token } = require("morgan")
 
 const RoleShop = {
     SHOP: "SHOP",
@@ -16,8 +20,41 @@ const RoleShop = {
 
 class AccessService {
 
-    static signUp = async ({ name, email, password }) => {
+    static login = async ({ email, password, refreshToken = null }) => {
+        const foundShop = await findByEmail({ email })
+
+        if (!foundShop) 
+            throw new BadRequestError("shop not registerd")
         
+        const passwordMatch = await bcrypt.compare(password, foundShop.password)
+        
+        if (!passwordMatch)
+            throw new UnauthorisedError("authentication error")
+        
+        
+        let privateKey = crypto.randomBytes(64).toString("hex")
+        let publicKey = crypto.randomBytes(64).toString("hex")
+        
+        const tokens = await createTokenPair({ userId: foundShop._id, email }, publicKey, privateKey)
+        
+        await keyTokenService.createKeyToken({
+            userId: foundShop._id,
+            refreshToken: tokens.refreshToken,
+            privateKey,
+            publicKey,
+        })
+        
+        return {
+            shop: getInfoData({
+                fields: ["_id", "name", "email"],
+                object: foundShop
+            }),
+            tokens
+        }
+    }
+
+    static signUp = async ({ name, email, password }) => {
+
         const holderShop = await shopModel.findOne({ email }).lean()
 
         if (holderShop) {
@@ -28,54 +65,46 @@ class AccessService {
 
         const newShop = await shopModel.create({ name, email, password: passwordHashed, roles: RoleShop.SHOP })
 
-        if (newShop) {
-            // const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
-            //     modulusLength: 4096,
-            //     publicKeyEncoding: {
-            //         type: "pkcs1",
-            //         format: "pem"
-            //     },
-            //     privateKeyEncoding: {
-            //         type: "pkcs1",
-            //         format: "pem"
-            //     },
-            // })
+        if (!newShop)
+            throw new Error("failed to create new shop")
 
-            let privateKey = crypto.randomBytes(64).toString("hex")
-            let publicKey = crypto.randomBytes(64).toString("hex")
+        // const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+        //     modulusLength: 4096,
+        //     publicKeyEncoding: {
+        //         type: "pkcs1",
+        //         format: "pem"
+        //     },
+        //     privateKeyEncoding: {
+        //         type: "pkcs1",
+        //         format: "pem"
+        //     },
+        // })
 
-
-            console.log({ publicKey, privateKey })
-
-            const keyStore = await keyTokenService.createKeyToken({
-                userId: newShop._id,
-                publicKey,
-                privateKey
-            })
-
-            if (!keyStore) {
-                return new Error('create publicKeyString errr')
-            }
+        let privateKey = crypto.randomBytes(64).toString("hex")
+        let publicKey = crypto.randomBytes(64).toString("hex")
 
 
-            const tokens = await createTokenPair({ userId: newShop._id, email }, publicKey, privateKey)
+        console.log({ publicKey, privateKey })
 
-            return {
-                code: "201",
-                metadata: {
-                    shop: getInfoData({
-                        fields: ["_id", "name", "email"],
-                        object: newShop
-                    }),
-                    tokens
-                }
-            }
+        const keyStore = await keyTokenService.createKeyToken({
+            userId: newShop._id,
+            publicKey,
+            privateKey
+        })
 
+        if (!keyStore) {
+            return new Error('create publicKeyString errr')
         }
 
+
+        const tokens = await createTokenPair({ userId: newShop._id, email }, publicKey, privateKey)
+
         return {
-            code: "200",
-            metadata: null
+            shop: getInfoData({
+                fields: ["_id", "name", "email"],
+                object: newShop
+            }),
+            tokens
         }
 
     }
