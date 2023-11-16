@@ -18,6 +18,17 @@ x-api-key: {{apiKey}}
     "password": "123!@#"
 }
 
+
+###
+POST {{url}}/shop/refresh-token
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}} 
+
+{
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwMTQ4NzkwLCJleHAiOjE3MDA3NTM1OTB9.c4vr7WHpdbNmoHGaDuXMR4PRwA-_l9BR0kxHt6CfmXc"
+}
 ###
 
 POST {{url}}/product
@@ -27,16 +38,33 @@ x-client-id: {{clientId}}
 Authorization: {{accessToken}} 
 
 {
-    "product_name": "New Jeans",
-    "product_description": "High quality denim jeans",
-    "product_price" : 50,
-    "product_shop": "65547cbdb9becc31498cf0f1",
-    "product_type": "Clothing",
+    "product_name": "iPhone 14",
+    "product_description": "High quality phone",
+    "product_price" : 168,
+    "product_type": "Electronic",
     "product_thumb": "product_thumb",
-    "product_quantity": 5,
+    "product_quantity": 10,
     "product_attribute" : {
-        "brand": "levi",
-        "size": "L",
-        "material": "denim"
+        "manufacturer": "Apple",
+        "model": "iPhone14",
+        "color": "Gold"
     }
+
+
 }
+
+
+# {
+#     "product_name": "New Jeans",
+#     "product_description": "High quality denim jeans",
+#     "product_price" : 50,
+#     "product_shop": "65547cbdb9becc31498cf0f1",
+#     "product_type": "Clothing",
+#     "product_thumb": "product_thumb",
+#     "product_quantity": 5,
+#     "product_attribute" : {
+#         "brand": "levi",
+#         "size": "L",
+#         "material": "denim"
+#     }
+# }

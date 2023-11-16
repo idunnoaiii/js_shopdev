@@ -53,12 +53,12 @@ const authentication = asyncHandler(async (req, res, next) => {
             throw new UnauthorisedError("invalid user")
         }
 
-
+        req.user = decodedUser
         req.keyStore = keyStore
         return next()
 
     } catch (err) {
-        throw err
+        throw new UnauthorisedError("invalid token: error decode token")
     }
 
 })
