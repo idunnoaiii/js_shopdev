@@ -4,6 +4,8 @@ const morgan = require("morgan")
 const compression = require("compression")
 require('dotenv').config()
 
+const config = require("./configs/config.mongodb.js")
+
 
 const app = express()
 
@@ -36,6 +38,7 @@ app.use((error, req, res, next) => {
     return res.status(statusCode).json({
         status: "error",
         code: statusCode,
+        errorDetail: config.app.isDev ? error.stack : "",
         message: error.message || "Internal Server Error" 
     })
 })

@@ -10,6 +10,7 @@ const { ConflictRequestError, BadRequestError, UnauthorisedError, ForbiddenError
 
 const { findByEmail } = require("./shop.service")
 const keytokenModel = require("../models/keytoken.model")
+const { keys } = require("lodash")
 
 const RoleShop = {
     SHOP: "SHOP",
@@ -26,44 +27,35 @@ class AccessService {
         return {}
     }
 
-    static refreshToken = async (refreshToken) => {
-        const foundUsedToken = await keyTokenService.findByRefreshTokensUsed(refreshToken)
+    static refreshToken = async ({ refreshToken, keyStore, user }) => {
 
-        if (foundUsedToken) {
-            const { userId, email } = verifyJwt(refreshToken, foundUsedToken.privateKey)
-            console.log({ userId, email })
+
+        const { userId, email } = user;
+
+        if (keyStore.refreshTokensUsed.includes(refreshToken)) {
             await keyTokenService.removeByUserId(userId)
             throw new ForbiddenError("something wrong! please login again")
         }
 
-        const holderToken = await keyTokenService.findByRefreshToken(refreshToken)
-
-        if (!holderToken) throw new ForbiddenError("something wrong! please login again")
-
-        const { userId, email } = verifyJwt(refreshToken, holderToken.privateKey)
+        if (keyStore.refreshToken != refreshToken) {
+            await keyTokenService.removeByUserId(userId)
+            throw new ForbiddenError("something wrong! please login again")
+        }
 
         const foundShop = await findByEmail({ email })
 
         if (!foundShop) throw new ForbiddenError("something wrong! please login again")
 
-        const tokenPair = await createTokenPair({ userId, email }, holderToken.publicKey, holderToken.privateKey)
-
-        // await holderToken.update({
-        //     $set: {
-        //         refreshToken: tokenPair.refreshToken
-        //     },
-        //     $addToSet: {
-        //         refreshTokensUsed: tokenPair.refreshToken
-        //     }
-        // })
+        const tokenPair = await createTokenPair({ userId, email }, keyStore.publicKey, keyStore.privateKey)
 
         const updateResult = await keyTokenService.updateUsedRefreshToken(tokenPair.refreshToken, refreshToken)
+        
+        if (!updateResult) {
+            throw new Error("error update used refresh token")
+        }
 
         return {
-            user: {
-                userId,
-                email
-            },
+            user,
             tokenPair
         }
 

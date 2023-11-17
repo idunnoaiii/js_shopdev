@@ -1,7 +1,9 @@
 const dev = {
 
   app: {
-    port: process.env.DEV_PORT
+    port: process.env.DEV_PORT,
+    isDev: true,
+    isProd: false,
   },
 
   db: {
@@ -16,7 +18,9 @@ const dev = {
 const pro = {
   
   app: {
-    port: process.env.PORT
+    port: process.env.PRO_PORT,
+    isDev: false,
+    isProd: true,
   },
 
   db: {

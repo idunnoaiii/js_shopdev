@@ -42,6 +42,28 @@ const authentication = asyncHandler(async (req, res, next) => {
 
     if (!keyStore) throw new NotFoundError("keystore not found")
 
+    const refreshToken = req.headers[API_HEADER.REFRESHTOKEN]
+
+    if (refreshToken) {
+
+        try {
+            const decodedUser = jwt.verify(refreshToken, keyStore.privateKey)
+
+            if (userId !== decodedUser.userId) {
+                throw new UnauthorisedError("invalid user")
+            }
+
+            req.user = decodedUser
+            req.keyStore = keyStore
+            req.refreshToken = refreshToken
+            return next()
+
+        } catch (err) {
+            throw new UnauthorisedError("invalid token: error decode token")
+        }
+        
+    }
+
     const accessToken = req.headers[API_HEADER.AUTHORIZATION]
 
     if (!accessToken) throw new UnauthorisedError("missing access token")
