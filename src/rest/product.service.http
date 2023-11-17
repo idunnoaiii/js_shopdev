@@ -38,15 +38,15 @@ x-client-id: {{clientId}}
 Authorization: {{accessToken}} 
 
 {
-    "product_name": "iPhone 14",
+    "product_name": "ghe sofa",
     "product_description": "High quality phone",
     "product_price" : 168,
-    "product_type": "Electronic",
+    "product_type": "Furniture",
     "product_thumb": "product_thumb",
     "product_quantity": 10,
     "product_attribute" : {
-        "manufacturer": "Apple",
-        "model": "iPhone14",
+        "manufacturer": "sofacodon",
+        "model": "abcxxx",
         "color": "Gold"
     }
 
