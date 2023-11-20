@@ -2,7 +2,17 @@
 
 const { clothing, product, electronic, furniture } = require("../models/product.model")
 const { BadRequestError } = require("../core/error.response")
-const { findAllDraftForShop } = require("../models/repo/product.repo")
+const
+    {
+        findAllDraftForShop,
+        publishProductForShop,
+        findAllPublishedForShop,
+        unPublishProductForShop,
+        searchProductByUser,
+        findAllProducts,
+        findProduct
+    } = require("../models/repo/product.repo")
+
 
 class ProdcutFactory {
 
@@ -26,6 +36,33 @@ class ProdcutFactory {
     static async findAllDraftsForShop({ product_shop, limit = 50, skip = 0 }) {
         const query = { product_shop, isDraft: true }
         return await findAllDraftForShop({ query, limit, skip })
+    }
+
+    static async publishProductByShop({ product_shop, product_id }) {
+        const product = await publishProductForShop({ product_shop, product_id })
+        return product
+    }
+
+    static async unPublishProductByShop({ product_shop, product_id }) {
+        const product = await unPublishProductForShop({ product_shop, product_id })
+        return product
+    }
+
+    static async findAllPublishedForShop({ product_shop, limit = 50, skip = 0 }) {
+        const query = { product_shop, isPublished: true }
+        return await findAllPublishedForShop({ query, limit, skip })
+    }
+
+    static async getListSearchProduct({ keySearch }) {
+        return await searchProductByUser({ keySearch })
+    }
+
+    static async findAllProducts({ limit = 50, sort = "ctime", page = 1, filter = { isPublished: true } }) {
+        return await findAllProducts({ limit, sort, page, filter, select: ["product_name", "product_price", "product_thumb"] })
+    }
+
+    static async findProduct({ product_id }) {
+        return await findProduct({ product_id, unSelect: ["__v"] })
     }
 }
 

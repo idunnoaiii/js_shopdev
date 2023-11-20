@@ -69,6 +69,14 @@ Authorization: {{accessToken}}
     }
 }
 
+###
+
+POST {{url}}/product/publish/655b4f4b6b027e1cf8a71e65
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}} 
+
 
 ###
 GET {{url}}/product/drafts/all
@@ -77,3 +85,22 @@ x-api-key: {{apiKey}}
 x-client-id: {{clientId}}
 Authorization: {{accessToken}} 
 
+
+###
+GET {{url}}/product/published/all
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}} 
+
+
+###
+
+GET {{url}}/product/search/micro
+x-api-key: {{apiKey}}
+
+
+###
+
+GET {{url}}/product
+x-api-key: {{apiKey}}

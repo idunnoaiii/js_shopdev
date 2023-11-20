@@ -16,6 +16,24 @@ class ProductController {
         }).send(res)
     }
 
+    publisProductByShop = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.publishProductByShop({
+                product_id: req.params.id,
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    unPublisProductByShop = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.unPublishProductByShop({
+                product_id: req.params.id,
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
 
     // QUERY
     getAllDraftsForShop = async (req, res, next) => {
@@ -26,6 +44,34 @@ class ProductController {
         }).send(res)
     }
 
+    getAllPublishedByShop = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.findAllPublishedForShop({
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+    
+
+    getListSearchProduct = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.getListSearchProduct(req.params)
+        }).send(res)
+    }
+
+    getAllProducts = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.findAllProducts(req.query)
+        }).send(res)
+    }
+
+    getProduct = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.findProduct({
+                product_id: req.params.product_id
+            })
+        }).send(res)
+    }
 
     // END QUERY
 
