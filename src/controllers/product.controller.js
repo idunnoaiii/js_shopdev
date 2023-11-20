@@ -1,7 +1,7 @@
 "use strict"
 
 const ProductService = require("../services/product.service.v2")
-const { Created, SuccessResponse } = require("../core/success.response")
+const { Created, SuccessResponse, Ok } = require("../core/success.response")
 
 class ProductController {
 
@@ -15,6 +15,19 @@ class ProductController {
                 })
         }).send(res)
     }
+
+
+    // QUERY
+    getAllDraftsForShop = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.findAllDraftsForShop({
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+
+    // END QUERY
 
 }
 
