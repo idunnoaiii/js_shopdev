@@ -14,6 +14,8 @@ const
         updateProductById
     } = require("../models/repo/product.repo")
 
+const {insertInventory} = require("../models/repo/iventory.repo")
+
 
 const { removeUndefinedObject, updateNestedObjectParser } = require("../utils")
 
@@ -105,7 +107,16 @@ class Product {
     }
 
     async createProduct(productId) {
-        return await product.create({ ...this, _id: productId })
+        const newProduct = await newProduct.create({ ...this, _id: productId })
+        if (!newProduct) {
+           await insertInventory({
+               productId: productId,
+               shopId: this.product_shop,
+               stock: this.product_quantity
+           })
+        }
+        
+        return newProduct
     }
 
     async updateProduct(productId, payload) {
