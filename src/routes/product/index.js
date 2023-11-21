@@ -13,6 +13,7 @@ route.get("/:product_id", handleAsync(productController.getProduct))
 route.use(authentication)
 
 route.post("", handleAsync(productController.createProduct))
+route.patch("/:productId", handleAsync(productController.updateProduct))
 route.post("/publish/:id", handleAsync(productController.publisProductByShop))
 route.post("/unpublish/:id", handleAsync(productController.unPublisProductByShop))
 

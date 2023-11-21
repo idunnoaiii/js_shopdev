@@ -8,11 +8,19 @@ class ProductController {
     createProduct = async (req, res, next) => {
         return new SuccessResponse({
             message: "create product successfully",
-            metadata: await ProductService.createProduct(req.body.product_type,
-                {
-                    ...req.body,
-                    product_shop: req.user.userId
-                })
+            metadata: await ProductService.createProduct(req.body.product_type, {
+                ...req.body,
+                product_shop: req.user.userId
+            })
+        }).send(res)
+    }
+
+    updateProduct = async (req, res, next) => {
+        return new Ok({
+            metadata: await ProductService.updateProduct(req.body.product_type, req.params.productId, {
+                ...req.body,
+                product_shop: req.user.userId
+            })
         }).send(res)
     }
 
@@ -51,7 +59,7 @@ class ProductController {
             })
         }).send(res)
     }
-    
+
 
     getListSearchProduct = async (req, res, next) => {
         return new Ok({

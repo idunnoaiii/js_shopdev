@@ -40,4 +40,4 @@ POST {{url}}/shop/refresh-token
 Content-Type: application/json
 x-api-key: {{apiKey}} 
 x-client-id: {{clientId}}
-x-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwMTgwNDQ0LCJleHAiOjE3MDA3ODUyNDR9.yPp45sXyGeWO0sfOr8Lk_rLKoa2XyE69WAzL88TXlnE
+x-refresh-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwNTY3OTUxLCJleHAiOjE3MDExNzI3NTF9.VJxRt4d-6Zi8KjWyCT-hhX09l07yf58dbJZqvrerg5s

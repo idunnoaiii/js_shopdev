@@ -12,7 +12,7 @@ const COLLECTION_NAME = "Products"
 const productSchema = new Schema({
     product_name: { type: String, required: true },
     product_thumb: { type: String, required: true },
-    product_desciption: String,
+    product_description: String,
     product_slug: String,
     product_price: { type: Number, required: true },
     product_quantity: { type: Number, required: true },

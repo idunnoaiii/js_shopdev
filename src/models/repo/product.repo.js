@@ -1,6 +1,6 @@
 "use strict"
 
-const { product, electronic, clothing, furniture, product, product } = require("../../models/product.model")
+const { product, electronic, clothing, furniture } = require("../../models/product.model")
 const { Types } = require("mongoose")
 const { getSelectData, unGetSelectData } = require("../../utils")
 
@@ -82,8 +82,14 @@ const findAllProducts = async ({ limit, sort, page, filter, select }) => {
 
 }
 
-const findProduct = async ({product_id, unSelect}) => {
+const findProduct = async ({ product_id, unSelect }) => {
     return await product.findById(product_id).select(unGetSelectData(unSelect))
+}
+
+const updateProductById = async ({ productId, payload, model, isNew = true }) => {
+    return await model.findByIdAndUpdate(productId, payload, {
+        new: isNew
+    })
 }
 
 module.exports = {
@@ -93,5 +99,6 @@ module.exports = {
     findAllPublishedForShop,
     searchProductByUser,
     findAllProducts,
-    findProduct
+    findProduct,
+    updateProductById
 }

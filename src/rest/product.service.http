@@ -37,23 +37,6 @@ x-api-key: {{apiKey}}
 x-client-id: {{clientId}}
 Authorization: {{accessToken}} 
 
-# {
-#     "product_name": "ghe sofa",
-#     "product_description": "High quality phone",
-#     "product_price" : 168,
-#     "product_type": "Furniture",
-#     "product_thumb": "product_thumb",
-#     "product_quantity": 10,
-#     "product_attribute" : {
-#         "manufacturer": "sofacodon",
-#         "model": "abcxxx",
-#         "color": "Gold"
-#     }
-
-
-# }
-
-
 {
     "product_name": "New Jeans",
     "product_description": "High quality denim jeans",
@@ -68,6 +51,25 @@ Authorization: {{accessToken}}
         "material": "denim"
     }
 }
+
+###
+
+PATCH {{url}}/product/655bf9d535cec304d34690b8
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}} 
+
+{
+    "product_name": "New Jeans 02",
+    "product_description": "High quality denim jeans updated",
+    "product_type": "Clothing",
+    "product_attribute" : {
+        "size": "XXL",
+        "material": "denim golden"
+    }
+}
+
 
 ###
 
