@@ -176,11 +176,11 @@ class Electronic extends Product {
 
         const objectParams = this
 
-        console.log("Original object::", objectParams);
+        // console.log("Original object::", objectParams);
 
         const newObject = removeUndefinedObject(objectParams)
 
-        console.log("Original object::", newObject);
+        // console.log("Original object::", newObject);
 
         if (objectParams.product_attribute) {
             await updateProductById({ productId, payload: updateNestedObjectParser(newObject.product_attribute), model: electronic })
