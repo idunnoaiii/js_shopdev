@@ -5,16 +5,16 @@ class DiscountController {
 
     createDiscountCode = async (req, res, next) => {
         return new SuccessResponse({
-            metadata: DiscountService.createDiscountCode({
+            metadata: await DiscountService.createDiscountCode({
                 ...req.body,
                 shopId: req.user.userId
             })
         }).send(res)
     }
 
-    getAllDiscountCodes = async (req, res, next) => {
+    getAllDiscountCodeOfShop = async (req, res, next) => {
         return new SuccessResponse({
-            metadata: DiscountService.getAllDiscountCodesOfShop({
+            metadata: await DiscountService.getAllDiscountCodesOfShop({
                 ...req.query,
                 shopId: req.user.userId
             })
@@ -23,21 +23,19 @@ class DiscountController {
 
     getDiscountAmount = async (req, res, next) => {
         return new SuccessResponse({
-            metadata: DiscountService.getDiscountAmount({
+            metadata: await DiscountService.getDiscountAmount({
                 ...req.body,
             })
         }).send(res)
     }
-    
-    getAllDiscountCodesWithProduct = async (req, res, next) => {
+
+    getAllProductsForDiscountCode = async (req, res, next) => {
         return new SuccessResponse({
-            metadata: DiscountService.getAllDiscountCodesWithProduct({
+            metadata: await DiscountService.getAllProductsForDiscountCode({
                 ...req.query
             })
         }).send(res)
     }
-    
-    
 
 
 }

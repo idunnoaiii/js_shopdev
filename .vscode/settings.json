@@ -1,0 +1,12 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {
+        },
+        "dev": {
+            "url":"http://localhost:3000/v1/api",
+            "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwNzQ0MTYwLCJleHAiOjE3MDA5MTY5NjB9.Z4MPsSswoVT1e4Xb66yhWbQrV8A5Acc5lEBrDajwn6s",
+            "apiKey": "7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3",
+            "clientId": "65547cbdb9becc31498cf0f1"
+        }
+    }
+}

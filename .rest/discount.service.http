@@ -1,0 +1,68 @@
+# @name createDiscount
+POST {{url}}/discount
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+{
+    "name": "name fixed amount",
+    "description" : "desctiption",
+    "type": "percentage",
+    "value": 30000,
+    "max_value" : 30000,
+    "code": "SHOP-1122",
+    "start_date": "2023-11-20 09:00:00",
+    "end_date": "2023-11-30 09:00:00",
+    "max_uses" : 100,
+    "uses_count": 0,
+    "users_used": [],
+    "max_uses_per_user": 1,
+    "min_order_value": 200000,
+    "created_by": {},
+    "is_active": true,
+    "applies_to": "specific",
+    "product_ids": ["655bf9d535cec304d34690b8", "655f4867ed60da1929ce4faa"]
+}
+
+
+###
+
+# @name getListProductForDiscountCode
+GET {{url}}/discount/list-product-code?code=SHOP-1122&shopId={{clientId}}
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+
+
+###
+
+# @name getDiscountCodeByShop
+GET {{url}}/discount
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+
+###
+
+# @name getDiscountAmount
+POST {{url}}/discount/amount
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+{
+    "codeId": "SHOP-1122",
+    "userId": 2,
+    "shopId": "{{clientId}}",
+    "products" : 
+    [ 
+        {
+            "productId": "",
+            "quantity": 5,
+            "price": 100000
+        }
+    ]
+}

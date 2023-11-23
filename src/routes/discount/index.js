@@ -7,12 +7,12 @@ const { authentication } = require('../../auth/authUtils')
 const router = express.Router()
 
 router.post("/amount", handleAsync(discountController.getDiscountAmount))
-router.get("/list-product-codes", handleAsync(discountController.getAllDiscountCodesWithProduct))
+router.get("/list-product-code", handleAsync(discountController.getAllProductsForDiscountCode))
 
 router.use(authentication)
 
 router.post("/", handleAsync(discountController.createDiscountCode))
-router.get("/", handleAsync(discountController.getAllDiscountCodes))
+router.get("/", handleAsync(discountController.getAllDiscountCodeOfShop))
 
 
 module.exports = router

@@ -1,9 +1,3 @@
-@url=http://localhost:3000/v1/api
-
-@accessToken={{loginRequest.response.body.$.metadata.tokens.accessToken}}
-@apiKey=7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3 
-@clientId=65547cbdb9becc31498cf0f1
-
 POST {{url}}/shop/signup
 Content-Type: application/json
 x-api-key: {{apiKey}}

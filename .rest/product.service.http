@@ -1,36 +1,4 @@
 
-@url=http://localhost:3000/v1/api
-
-@accessToken={{loginRequest.response.body.$.metadata.tokens.accessToken}}
-@apiKey=7df2ef089e50895c78c7ce118947bd2c2064dcc304364d45956e52a909c9097e4802b012714acd3842b439bde2f1267996a4fa7200111f548295e9317ab322e3 
-@clientId=65547cbdb9becc31498cf0f1
-
-
-
-###
-# @name loginRequest
-POST {{url}}/shop/login
-Content-Type: application/json
-x-api-key: {{apiKey}}
-
-{
-    "email": "shop7@gmai.com",
-    "password": "123!@#"
-}
-
-
-###
-POST {{url}}/shop/refresh-token
-Content-Type: application/json
-x-api-key: {{apiKey}} 
-x-client-id: {{clientId}}
-Authorization: {{accessToken}} 
-
-{
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTU0N2NiZGI5YmVjYzMxNDk4Y2YwZjEiLCJlbWFpbCI6InNob3A3QGdtYWkuY29tIiwiaWF0IjoxNzAwMTQ4NzkwLCJleHAiOjE3MDA3NTM1OTB9.c4vr7WHpdbNmoHGaDuXMR4PRwA-_l9BR0kxHt6CfmXc"
-}
-###
-
 POST {{url}}/product
 Content-Type: application/json
 x-api-key: {{apiKey}} 
@@ -38,17 +6,16 @@ x-client-id: {{clientId}}
 Authorization: {{accessToken}} 
 
 {
-    "product_name": "New Jeans",
-    "product_description": "High quality denim jeans",
-    "product_price" : 50,
-    "product_shop": "65547cbdb9becc31498cf0f1",
+    "product_name": "Dung cu tap the hinh (ta binh voi)",
+    "product_description": "Dung cu tap the hinh, nang cao chat luong cuoc song",
+    "product_price" : 100000,
     "product_type": "Clothing",
     "product_thumb": "product_thumb",
     "product_quantity": 5,
     "product_attribute" : {
-        "brand": "levi",
+        "brand": "FPT Sport",
         "size": "L",
-        "material": "denim"
+        "material": "sat"
     }
 }
 
@@ -73,7 +40,7 @@ Authorization: {{accessToken}}
 
 ###
 
-POST {{url}}/product/publish/655b4f4b6b027e1cf8a71e65
+POST {{url}}/product/publish/655f4867ed60da1929ce4faa
 Content-Type: application/json
 x-api-key: {{apiKey}} 
 x-client-id: {{clientId}}

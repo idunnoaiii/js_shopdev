@@ -107,7 +107,7 @@ class Product {
     }
 
     async createProduct(productId) {
-        const newProduct = await newProduct.create({ ...this, _id: productId })
+        const newProduct = await product.create({ ...this, _id: productId })
         if (!newProduct) {
            await insertInventory({
                productId: productId,

@@ -15,7 +15,7 @@ class DiscountService {
                 name, description, type, value, max_value, max_uses, uses_count, max_uses_per_user
             } = payload
 
-        if (new Date() < new Date(start_date) || new Date() < new Date(end_date)) {
+        if (new Date() < new Date(start_date) || new Date() > new Date(end_date)) {
             throw new BadRequestError("discount code has expired")
         }
 
@@ -37,7 +37,8 @@ class DiscountService {
             discount_description: description,
             discount_type: type,
             discount_code: code,
-            max_value: value,
+
+            discount_value: value,
             discount_min_order_value: min_order_value || 0,
             discount_max_value: max_value,
             discount_start_date: new Date(start_date),
@@ -127,11 +128,13 @@ class DiscountService {
 
     static async getDiscountAmount({ codeId, userId, shopId, products }) {
 
-        const foundDiscount = await checkDiscountExists(discountModel,
-            filter = {
+        let foundDiscount = await checkDiscountExists({
+            model: discountModel,
+            filter: {
                 discount_code: codeId,
                 discount_shopId: convertToObjectIdMongo(shopId)
-            })
+            }
+        })
 
         if (!foundDiscount) {
             throw new NotFoundError("discount does not exists")
@@ -167,11 +170,11 @@ class DiscountService {
         let totalOrder = 0
         if (discount_min_order_value > 0) {
             // get total of cart
-            total = products.reduce((acc, product) => {
+            totalOrder = products.reduce((acc, product) => {
                 return acc + (product.quantity * product.price)
             }, 0)
 
-            if (total < discount_min_order_value) {
+            if (totalOrder < discount_min_order_value) {
                 throw new BadRequestError("discount requrie minium order value")
             }
         }
@@ -204,9 +207,11 @@ class DiscountService {
     }
 
     static async cancelDiscontCode({ codeId, shopId, userId }) {
-        const foundDiscount = await checkDiscountExists(mode = discountModel, filter = {
-            discount_code: codeId,
-            discount_shopId: shopId
+        const foundDiscount = await checkDiscountExists({
+            mode: discountModel, filter: {
+                discount_code: codeId,
+                discount_shopId: shopId
+            }
         })
 
         if (!foundDiscount) {
