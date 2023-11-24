@@ -1,7 +1,7 @@
 "use strict"
 
 const { } = require("../discount.model")
-const { unGetSelectData, getSelectData } = require("../../utils/")
+const { getUnselectData, getSelectData } = require("../../utils/")
 
 const findAllDiscountCodesUnselect = async ({
     page = 1, limit = 50, sort = "ctime",
@@ -14,7 +14,7 @@ const findAllDiscountCodesUnselect = async ({
         .sort(sortBy)
         .skip(skip)
         .limit(limit)
-        .select(unGetSelectData(unSelect))
+        .select(getUnselectData(unSelect))
         .lean()
 
     return documents

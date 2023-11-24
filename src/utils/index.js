@@ -12,7 +12,7 @@ const getSelectData = (select = []) => {
     return Object.fromEntries(select.map(el => [el, 1]))
 }
 
-const unGetSelectData = (select = []) => {
+const getUnSelectData = (select = []) => {
     return Object.fromEntries(select.map(el => [el, 0]))
 }
 
@@ -53,7 +53,7 @@ const convertToObjectIdMongo = id => new Types.ObjectId(id)
 module.exports = {
     getInfoData,
     getSelectData,
-    unGetSelectData,
+    getUnSelectData,
     removeUndefinedObject,
     updateNestedObjectParser,
     convertToObjectIdMongo

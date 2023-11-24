@@ -2,7 +2,7 @@
 
 const { product, electronic, clothing, furniture } = require("../../models/product.model")
 const { Types } = require("mongoose")
-const { getSelectData, unGetSelectData } = require("../../utils")
+const { getSelectData, getUnselectData } = require("../../utils")
 
 const findAllDraftForShop = async ({ query, limit, skip }) => {
     return await queryProduct({ query, limit, skip })
@@ -83,7 +83,7 @@ const findAllProducts = async ({ limit, sort, page, filter, select }) => {
 }
 
 const findProduct = async ({ product_id, unSelect }) => {
-    return await product.findById(product_id).select(unGetSelectData(unSelect))
+    return await product.findById(product_id).select(getUnselectData(unSelect))
 }
 
 const updateProductById = async ({ productId, payload, model, isNew = true }) => {
