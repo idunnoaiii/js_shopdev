@@ -1,0 +1,63 @@
+###
+# @name addToCart
+POST {{url}}/cart
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+{
+   "userId" : 1000,
+   "product": {
+        "productId": "655f4867ed60da1929ce4faa",
+        "shopId": "65547cbdb9becc31498cf0f1",
+        "quantity": 11
+    }
+    
+}
+
+
+###
+# @name deleteProductInCart
+DELETE {{url}}/cart
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+{
+    "userId": 1000,
+    "productId" : "655f4867ed60da1929ce4faa"
+}
+
+###
+# @name getCartOfUser
+GET {{url}}/cart?userId=1000
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+###
+# @name updateCart
+POST {{url}}/cart/update
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}
+
+{
+    "userId": 1000,
+    "shop_order_ids": [{
+        "shopId": "65547cbdb9becc31498cf0f1",
+        "item_products": [
+            {
+                "productId": "655f4867ed60da1929ce4faa",
+                "shopId": "65547cbdb9becc31498cf0f1",
+                "quantity": 11,
+                "old_quantity": 10
+            }
+        ]
+    }],
+    "verson": 2000
+}

@@ -70,6 +70,6 @@ x-api-key: {{apiKey}}
 
 
 ###
-
+# @name getAllProducts
 GET {{url}}/product
 x-api-key: {{apiKey}}
