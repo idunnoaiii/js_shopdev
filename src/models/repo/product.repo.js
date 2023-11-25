@@ -37,6 +37,12 @@ const queryProduct = async ({ query, limit, skip }) => {
         .exec()
 }
 
+const getProductById = async (productId) => {
+    return await product.findOne({
+        _id: new Types.ObjectId(productId)
+    }).lean()
+}
+
 const publishProductForShop = async ({ product_shop, product_id }) => {
     const foundShop = await product
         .findOne({ product_shop: new Types.ObjectId(product_shop), _id: new Types.ObjectId(product_id) })
@@ -100,5 +106,6 @@ module.exports = {
     searchProductByUser,
     findAllProducts,
     findProduct,
-    updateProductById
+    updateProductById,
+    getProductById
 }
