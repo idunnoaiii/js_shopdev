@@ -1,18 +1,19 @@
 const cartModel = require("../cart.model")
 const { convertToObjectIdMongo } = require("../../utils")
+const {getProductById} = require("../repo/product.repo")
 
 const findCartById = async (cartId) => {
-    return await cartModel.findOne({ _id: convertToObjectIdMongo(convertOb), cart_state: "active" }).lean()
+    return await cartModel.findOne({ _id: convertToObjectIdMongo(cartId), cart_state: "active" }).lean()
 }
 
 const checkProductByServer = async (products) => {
     return Promise.all(products.map(async product => {
-        const foundProduct = await getProductById(product.prodcutId)
+        const foundProduct = await getProductById(product.productId)
         if (foundProduct) {
             return {
-                price: foundProduct.price,
-                quantity: foundProduct.quantity,
-                productId: foundProduct.prodcutId
+                price: foundProduct.product_price,
+                quantity: foundProduct.product_quantity,
+                productId: foundProduct._id
             }
         }
     }))

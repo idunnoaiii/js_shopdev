@@ -37,7 +37,7 @@ class CheckoutSerivce {
         userId,
         shop_order_ids
     }) {
-        const foundCart = await findCartById(cardId)
+        const foundCart = await findCartById(cartId)
         if (!foundCart) {
             throw new BadRequestError("cart not exisis")
         }
@@ -60,7 +60,14 @@ class CheckoutSerivce {
                 throw new BadRequestError("order wrong")
             }
 
-            const checkoutPrice = productInServer
+            const mergedProducts = productInServer.map(x => {
+                return {
+                    ...x,
+                    quantity: item_products.find(y => y.productId == x.productId.toString()).quantity,
+                }
+            });
+
+            const checkoutPrice = mergedProducts
                 .reduce((acc, prod) => acc + (prod.quantity * prod.price), 0)
 
             checkout_order.totalPrice += checkoutPrice
@@ -70,7 +77,7 @@ class CheckoutSerivce {
                 shop_discounts,
                 price_raw: checkoutPrice,
                 price_apply_discount: checkoutPrice,
-                item_products: productInServer
+                item_products: mergedProducts
             }
 
             if (shop_discounts.length > 0) {
@@ -79,22 +86,26 @@ class CheckoutSerivce {
                     codeId: shop_discounts[0].codeId,
                     userId,
                     shopId,
-                    products: productInServer
+                    products: mergedProducts
                 })
-                
+
                 checkout_order.totalDiscount += discount
-                
+
                 if (discount > 0) {
                     item_checkout.price_apply_discount = checkoutPrice - discount
                 }
 
             }
-            
-            checkout_order.totalCheckout += checkout_order.price_apply_discount
-            shop_order_ids_new.push(checkout_order)
+
+            checkout_order.totalCheckout += item_checkout.price_apply_discount
+            shop_order_ids_new.push({
+                shopId,
+                shop_discounts,
+                item_products: mergedProducts
+            })
 
         }
-        
+
         return {
             shop_order_ids,
             shop_order_ids_new,
