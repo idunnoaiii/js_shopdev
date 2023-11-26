@@ -3,6 +3,8 @@ const { findCartById, checkProductByServer } = require("../models/repo/cart.repo
 const { NotFoundError, BadRequestError } = require("../core/error.response")
 
 const discountSvc = require("../services/discount.service")
+const { acquireLock, releaseLock } = require("../services/redis.service")
+const orderModel = require("../models/order.model")
 
 class CheckoutSerivce {
 
@@ -81,8 +83,8 @@ class CheckoutSerivce {
             }
 
             if (shop_discounts.length > 0) {
-                const { totalPrice = 0, discount = 0 } = await discountSvc.getDiscountAmount({
 
+                const { totalPrice = 0, discount = 0 } = await discountSvc.getDiscountAmount({
                     codeId: shop_discounts[0].codeId,
                     userId,
                     shopId,
@@ -111,6 +113,75 @@ class CheckoutSerivce {
             shop_order_ids_new,
             checkout_order
         }
+    }
+
+    static async orderByUser({
+        shop_order_ids,
+        cartId,
+        userId,
+        userAddress = {},
+        userPayment = {}
+    }) {
+        const { checkout_order, shop_order_ids_new } = await this.checkoutReview({
+            shop_order_ids,
+            cartId,
+            userId,
+        })
+
+        // check exceeding inventory
+        const products = shop_order_ids_new.flatMap(order => order.item_products)
+
+        const acquireProduct = []
+        for (const productItem of products) {
+            const { productId, quantity } = productItem
+            const keyLock = await acquireProduct(productId, quantity, cartId)
+            acquireProduct.push(keyLock ? true : false)
+
+            if (keyLock) {
+                await releaseLock(keyLock)
+            }
+        }
+
+        if (acquireProduct.some(x => !x)) {
+            throw new BadRequestError("some product is updated, please update cart")
+        }
+
+        const newOrder = await orderModel.create({
+            order_userId: userId,
+            order_checkout: checkout_order,
+            order_shipping: userAddress,
+            order_payment: userPayment,
+            order_products: shop_order_ids_new
+        })
+
+        if (newOrder) {
+            // remove product in cart
+        }
+
+        return newOrder
+
+    }
+
+
+    // query order [user]
+    static async getOrdersByUser({ userId }) {
+
+    }
+
+    // query one order by id
+    static async getOneOrderById() {
+
+    }
+
+
+    // cancel order [user]
+    static async cancelOrderById() {
+
+    }
+
+    // update [shop]
+    static async updateOrderStatusByShop() {
+
     }
 }
 
