@@ -1,0 +1,5 @@
+GET {{url}}/notification
+Content-Type: application/json
+x-api-key: {{apiKey}} 
+x-client-id: {{clientId}}
+Authorization: {{accessToken}}

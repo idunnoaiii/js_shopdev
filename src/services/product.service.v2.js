@@ -14,10 +14,11 @@ const
         updateProductById
     } = require("../models/repo/product.repo")
 
-const {insertInventory} = require("../models/repo/iventory.repo")
+const { insertInventory } = require("../models/repo/iventory.repo")
 
 
 const { removeUndefinedObject, updateNestedObjectParser } = require("../utils")
+const { pushNotiToSystem } = require("./notification.service")
 
 
 class ProdcutFactory {
@@ -109,13 +110,26 @@ class Product {
     async createProduct(productId) {
         const newProduct = await product.create({ ...this, _id: productId })
         if (!newProduct) {
-           await insertInventory({
-               productId: productId,
-               shopId: this.product_shop,
-               stock: this.product_quantity
-           })
+            await insertInventory({
+                productId: productId,
+                shopId: this.product_shop,
+                stock: this.product_quantity
+            })
         }
-        
+
+        pushNotiToSystem({
+            type: "SHOP-001",
+            receivedId: 1,
+            senderId: this.product_shop,
+            noti_content: "Mot san pham vua duoc tao",
+            options: {
+                product_name: this.product_name,
+                shop_name: this.product_shop
+            }
+        })
+        .then(res => console.log(res))
+        .catch(err => console.error(err))
+
         return newProduct
     }
 
