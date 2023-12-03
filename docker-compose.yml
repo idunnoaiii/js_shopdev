@@ -2,11 +2,13 @@ version: '3.7'
 
 services:
   
-  mongo:
-    # docker exec -it mongodb /bin/bash
-    # docker run --name container_name -p 27017:27017 --network bridge -d mongo
-    # mongodb://localhost:27017
-    container_name: 'shopdev-mongo'
-    image: 'mongo:latest'
-    ports:
-      - '27017:27017'
+  # mongo:
+  #   # docker exec -it mongodb /bin/bash
+  #   # docker run --name container_name -p 27017:27017 --network bridge -d mongo
+  #   # mongodb://localhost:27017
+  #   container_name: 'shopdev-mongo'
+  #   image: 'mongo:latest'
+  #   ports:
+  #     - '27017:27017'
+  
+  
