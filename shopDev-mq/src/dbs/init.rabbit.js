@@ -37,6 +37,7 @@ const consumeQueue = async (channel, queueName) => {
 
 
 const connectToRabbitMqTest = async () => {
+    
     try {
         const { channel, connection } = await connectToRabbitMq()
         const queueName = "test"
