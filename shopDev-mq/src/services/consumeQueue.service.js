@@ -24,12 +24,32 @@ const messageService = {
 
             const notiQueue = "notiQueue"
 
+            // 1. TTL
+            // channel.consume(notiQueue, msg => {
+            //     console.log(`RECEIVED: queue:::${notiQueue}`, msg.content.toString());
+            //     channel.ack(msg)
+            // })
 
+            // 2. LOGIC
             channel.consume(notiQueue, msg => {
-                console.log(`RECEIVED: queue:::${notiQueue}`, msg.content.toString());
-                channel.ack(msg)
+                try {
+                    const numberTest = Math.random()
+                    if (numberTest < 0.8) {
+                        console.log(numberTest);
+                        throw new Error(`Handle message failed :::${notiQueue}`, msg.content.toString())
+                    }
+
+                    channel.ack(msg)
+                    console.log("Handle message successed", msg.content.toString());
+                } catch (error) {
+                    /**
+                     * first false: whether or not push the msg back to queue
+                     * second false: refuse sequence msg (NO! just refuse current msg)
+                     */
+                    channel.nack(msg, false, false) // negative acknownledgemant
+                }
             })
-            
+
 
         } catch (error) {
             console.error(error)

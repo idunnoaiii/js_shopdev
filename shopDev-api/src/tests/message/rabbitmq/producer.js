@@ -22,7 +22,6 @@ const runProducer = async () => {
     catch (err) {
         console.log(err)
     }
-
 }
 
 runProducer().catch(console.error)
